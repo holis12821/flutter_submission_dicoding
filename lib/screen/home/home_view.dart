@@ -25,7 +25,7 @@ class _HomeViewState extends State<HomeView> {
             child: ListView(
               children: [
                 const Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Text(
                     'Where are you \ngoing?',
                     style: TextStyle(
@@ -55,7 +55,9 @@ class _HomeViewState extends State<HomeView> {
     String potretScreen,
     String keyword,
   ) {
-    final filteredMap = places.where((element) => element['name'] == keyword).toList();
+    final filteredMap = places
+        .where((element) => element['name'].toString().toLowerCase() == keyword)
+        .toList();
 
     return Container(
       padding: const EdgeInsets.only(
@@ -69,7 +71,9 @@ class _HomeViewState extends State<HomeView> {
         primary: false,
         itemCount: filteredMap.isEmpty ? places.length : filteredMap.length,
         itemBuilder: (context, index) {
-          Map place = filteredMap.isEmpty ? places.reversed.toList()[index] : filteredMap.reversed.toList()[index];
+          Map place = filteredMap.isEmpty
+              ? places.reversed.toList()[index]
+              : filteredMap.reversed.toList()[index];
           return HomeDestinationPlaceItem(
             place: place,
             potretScreen: potretScreen,
@@ -101,6 +105,6 @@ class _HomeViewState extends State<HomeView> {
   void _onSearch(String keyword) {
     setState(() {
       _keyword = keyword;
-    });   
+    });
   }
 }
